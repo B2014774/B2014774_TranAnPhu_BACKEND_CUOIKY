@@ -2,7 +2,7 @@ const express = require("express");
 const cors = require("cors");
 
 const app = express();
-const contactsRouter = require("./app/routes/contact.routes");
+const booksRouter = require("./app/routes/book.routes");
 const ApiError = require("./app/api-error");
 
 app.use(cors());
@@ -12,7 +12,7 @@ app.get("/", (req, res) => {
     res.json({ message: "Welcome to Library Manegement!"});
 });
 
-app.use("/api/contacts", contactsRouter);
+app.use("/api/books", booksRouter);
 
 //Lỗi 404
 app.use((req, res, next)=>{
