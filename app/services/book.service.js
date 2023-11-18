@@ -9,9 +9,11 @@ class BookService {
         const book = {
             name: payload.name,
             authorName: payload.authorName,
-            dateBorrow: payload.dateBorrow,
-            dateReturn: payload.dateReturn,
+            publishInfo: payload.publishInfo,
+            imageURL:payload.imageURL,
             available: payload.available,
+            position: payload.position,
+            genre: payload.genre,
         };
 
         Object.keys(book).forEach(
@@ -24,7 +26,7 @@ class BookService {
         const book = this.extractBookData(payload);
         const result = await this.Book.findOneAndUpdate(
             book,
-            { $set: {available: book.available === true}},
+            { $set: {available: true}},
             {returnDocument: "after", upsert: true}
         );
         return result;
