@@ -1,5 +1,5 @@
 const ApiError = require("../api-error");
-const ContactService = require("../services/contact.service");
+const StaffService = require("../services/staff.service");
 const MongoDB = require("../utils/mongodb.util");
 
 exports.create = async (req, res, next) => {
@@ -8,12 +8,12 @@ exports.create = async (req, res, next) => {
     // }
 
     try {
-        const contactService = new ContactService(MongoDB.client);
-        const document = await contactService.create(req.body);
+        const staffService = new StaffService(MongoDB.client);
+        const document = await staffService.create(req.body);
         return res.send(document);
     } catch (err) {
         return next(
-            new ApiError(500, "Lỗi xảy ra khi create contact")
+            new ApiError(500, "Lỗi xảy ra khi create staff")
         );
     }
 }
@@ -21,16 +21,16 @@ exports.create = async (req, res, next) => {
 exports.findAll = async (req, res, next) => {
     let documents = [];
     try {
-        const contactService = new ContactService(MongoDB.client);
-        const { HoTenKH } = req.query;
-        if (HoTenKH) {
-            documents = await contactService.findByName(HoTenKH);
+        const staffService = new StaffService(MongoDB.client);
+        const { HoTenNV } = req.query;
+        if (HoTenNV) {
+            documents = await staffService.findByName(HoTenNV);
         } else {
-            documents = await contactService.find({});
+            documents = await staffService.find({});
         }
     } catch (error) {
         return next(
-            new ApiError(500, "An error orcured while retriveing the contacts")
+            new ApiError(500, "An error orcured while retriveing the staffs")
         );
     }
 
@@ -39,8 +39,8 @@ exports.findAll = async (req, res, next) => {
 
 exports.findOne = async (req, res, next) => {
     try {
-        const contactService = new ContactService(MongoDB.client);
-        const document = await contactService.findById(req.params.id);
+        const staffService = new StaffService(MongoDB.client);
+        const document = await staffService.findById(req.params.id);
         if (!document) {
             return next(new ApiError(404, "Không tìm thấy tài khoản"));
         }
@@ -61,8 +61,8 @@ exports.findOne = async (req, res, next) => {
 //     }
 
 //     try {
-//         const contactService = new ContactService(MongoDB.client);
-//         const document = await contactService.update(req.params.id, req.body);
+//         const staffService = new StaffService(MongoDB.client);
+//         const document = await staffService.update(req.params.id, req.body);
 
 //         if (!document) {
 //             return next(new ApiError(404, "Không tìm thấy tài khoản"));
@@ -78,8 +78,8 @@ exports.findOne = async (req, res, next) => {
 
 // exports.delete = async (req, res, next) => {
 //     try {
-//         const contactService = new ContactService(MongoDB.client);
-//         const document = contactService.delete(req.params.id);
+//         const staffService = new StaffService(MongoDB.client);
+//         const document = staffService.delete(req.params.id);
 //         if (!document) {
 //             return next(new ApiError(404, "Không timg thấy tài khoản"));
 //         }
@@ -97,8 +97,8 @@ exports.findOne = async (req, res, next) => {
 
 // exports.deleteAll = async (req, res, next) => {
 //     try {
-//         const contactService = new ContactService(MongoDB.client);
-//         const deletedCount = await contactService.deleteAll();
+//         const staffService = new StaffService(MongoDB.client);
+//         const deletedCount = await staffService.deleteAll();
 //         return res.send({
 //             message: `${deletedCount} sách xóa thành công`,
 //         });
@@ -112,8 +112,8 @@ exports.findOne = async (req, res, next) => {
 
 // exports.findAllAdmin = async (req, res, next) => {
 //     try {
-//         const contactService = new ContactService(MongoDB.client);
-//         const documents = await contactService.findAdmin();
+//         const staffService = new StaffService(MongoDB.client);
+//         const documents = await staffService.findAdmin();
 //         return res.send(documents);
 //     } catch (err) {
 //         return next(new ApiError(
@@ -129,12 +129,12 @@ exports.findOne = async (req, res, next) => {
 //     }
 
 //     try {
-//         const contactService = new ContactService(MongoDB.client);
+//         const staffService = new StaffService(MongoDB.client);
 //         const { HoTenKH, password } = req.body;
         
 //         console.log(req.body);
 
-//         const document = await contactService.findUser(HoTenKH, password);
+//         const document = await staffService.findUser(HoTenKH, password);
 //         console.log(document);
 //         if (!document)
 //             res.send({

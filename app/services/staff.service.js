@@ -1,28 +1,29 @@
 const { ObjectId } = require("mongodb");
 
-class ContactService {
+class StaffService {
     constructor(client) {
-        this.Contact = client.db().collection("contacts");
+        this.Staff = client.db().collection("staff");
     }
 
-    extractContactData(payload){
-        const contact = {
-            HoTenKH: payload.HoTenKH,
+    extractStaffData(payload){
+        const staff = {
+            HoTenNV: payload.HoTenNV,
             Password: payload.Password,
+            ChucVu: payload.ChucVu,
             DiaChi: payload.DiaChi,
             SoDienThoai: payload.SoDienThoai,
         };
 
-        Object.keys(contact).forEach(
-            (key) => contact[key] === undefined && delete contact[key]
+        Object.keys(staff).forEach(
+            (key) => staff[key] === undefined && delete staff[key]
         );
-        return contact;
+        return staff;
     }
 
     async create(payload) {
-        const contact = this.extractContactData(payload);
-        const result = await this.Contact.findOneAndUpdate(
-            contact,
+        const staff = this.extractStaffData(payload);
+        const result = await this.Staff.findOneAndUpdate(
+            staff,
             { $set: {}},
             {returnDocument: "after", upsert: true}
         );
@@ -30,7 +31,7 @@ class ContactService {
     }
 
     async find(filter){
-        const cursor = await this.Contact.find(filter);
+        const cursor = await this.Staff.find(filter);
         return await cursor.toArray();
     }
 
@@ -41,7 +42,7 @@ class ContactService {
     }
 
     async findById(id){
-        return await this.Contact.findOne({
+        return await this.Staff.findOne({
             _id: ObjectId.isValid(id) ? new ObjectId(id) : null,
         });
     }
@@ -50,8 +51,8 @@ class ContactService {
     //     const filter = {
     //         _id: ObjectId.isValid(id) ? new ObjectId(id) : null,
     //     };
-    //     const update = this.extractContactData(payload);
-    //     const result  = await this.Contact.findOneAndUpdate(
+    //     const update = this.extractStaffData(payload);
+    //     const result  = await this.Staff.findOneAndUpdate(
     //         filter,
     //         { $set: update},
     //         { returnDocument: "after"}
@@ -60,14 +61,14 @@ class ContactService {
     // }
 
     // async delete(id) {
-    //     const result = await this.Contact.findOneAndDelete({
+    //     const result = await this.Staff.findOneAndDelete({
     //         _id: ObjectId.isValid(id) ? new ObjectId(id) : null,
     //     });
     //     return result;
     // }
 
     // async deleteAll(){
-    //     const result = await this.Contact.deleteMany({});
+    //     const result = await this.Staff.deleteMany({});
     //     return result.deletedCount;
     // }
 
@@ -76,11 +77,11 @@ class ContactService {
     // }
 
     // async findUser(Username, Password){
-    //     return await this.Contact.findOne({
+    //     return await this.Staff.findOne({
     //         username: Username,
     //         password: Password,
     //     });
     // }
 }
 
-module.exports = ContactService;
+module.exports = StaffService;

@@ -5,8 +5,9 @@ const app = express();
 const session = require('express-session');
 
 
-const booksRouter = require("./app/routes/book.routes");
+const productsRouter = require("./app/routes/product.routes");
 const contactsRouter = require("./app/routes/contact.routes");
+const staffsRouter = require("./app/routes/staff.routes");
 const ApiError = require("./app/api-error");
 
 app.use(cors());
@@ -21,12 +22,13 @@ app.use(session({
 
 //test Server
 app.get("/", (req, res) => {
-    res.json({ message: "Welcome to Library Manegement!"});
+    res.json({ message: "Welcome to QuanLyBanHang!"});
 });
 
 //Truyền Route
-app.use("/api/books", booksRouter);
+app.use("/api/products", productsRouter);
 app.use("/api/contacts", contactsRouter);
+app.use("/api/staffs", staffsRouter);
 
 //Lỗi 404 không tìm thấy route 
 app.use((req, res, next)=>{
