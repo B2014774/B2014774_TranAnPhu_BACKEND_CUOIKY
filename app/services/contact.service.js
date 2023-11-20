@@ -20,10 +20,12 @@ class ContactService {
     }
 
     async create(payload) {
+        let r = (Math.random() + 1).toString(36).substring(2);
+
         const contact = this.extractContactData(payload);
         const result = await this.Contact.findOneAndUpdate(
             contact,
-            { $set: {}},
+            { $set: {MSKH: r}},
             {returnDocument: "after", upsert: true}
         );
         return result;

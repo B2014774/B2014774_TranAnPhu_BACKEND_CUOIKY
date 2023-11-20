@@ -8,6 +8,9 @@ const session = require('express-session');
 const productsRouter = require("./app/routes/product.routes");
 const contactsRouter = require("./app/routes/contact.routes");
 const staffsRouter = require("./app/routes/staff.routes");
+const ordersRouter = require("./app/routes/order.routes");
+const detailOrderRouter = require("./app/routes/detailOrder.routes");
+
 const ApiError = require("./app/api-error");
 
 app.use(cors());
@@ -29,6 +32,8 @@ app.get("/", (req, res) => {
 app.use("/api/products", productsRouter);
 app.use("/api/contacts", contactsRouter);
 app.use("/api/staffs", staffsRouter);
+app.use("/api/orders", ordersRouter);
+app.use("/api/detailOrders", detailOrderRouter);
 
 //Lỗi 404 không tìm thấy route 
 app.use((req, res, next)=>{

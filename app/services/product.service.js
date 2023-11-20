@@ -12,6 +12,7 @@ class ProductService {
             Gia: payload.Gia,
             SoLuongHang:payload.SoLuongHang,
             GhiChu: payload.GhiChu,
+            HinhHH: payload.HinhHH,
         };
 
         Object.keys(product).forEach(
@@ -21,10 +22,12 @@ class ProductService {
     }
 
     async create(payload) {
+        let random = (Math.random() + 1).toString(36).substring(7);
+
         const product = this.extractProductData(payload);
         const result = await this.Product.findOneAndUpdate(
             product,
-            { $set: {}},
+            { $set: {MSHH: random}},
             {returnDocument: "after", upsert: true}
         );
         return result;

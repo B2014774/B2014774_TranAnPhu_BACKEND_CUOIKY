@@ -55,6 +55,22 @@ exports.findOne = async (req, res, next) => {
     }
 };
 
+exports.findOneByMS = async (req, res, next) => {
+    try {
+        const staffService = new StaffService(MongoDB.client);
+        const { MS } = req.query;
+        if (MS) {
+            documents = await staffService.findByMS(MS);
+        }
+    } catch (error) {
+        return next(
+            new ApiError(500, "An error orcured while retriveing the staffs")
+        );
+    }
+
+    return res.send(documents);
+}
+
 // exports.update = async (req, res, next) => {
 //     if (Object.keys(req.body).length === 0) {
 //         return next(new ApiError(400, "Nhập liệu không thể rỗng"));

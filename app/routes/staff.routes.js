@@ -8,8 +8,8 @@ router.route("/")
     .post(staffs.create)
 //     .delete(staffs.deleteAll);
 
-// router.route("/findAdmin")
-//     .get(staffs.findAllAdmin);
+router.route("/MS")
+    .get(staffs.findOneByMS);
 
 router.route("/:id")
     .get(staffs.findOne)

@@ -21,10 +21,12 @@ class StaffService {
     }
 
     async create(payload) {
+        let random = (Math.random() + 1).toString(36).substring(2);
+
         const staff = this.extractStaffData(payload);
         const result = await this.Staff.findOneAndUpdate(
             staff,
-            { $set: {}},
+            { $set: {MSNV: random}},
             {returnDocument: "after", upsert: true}
         );
         return result;
@@ -47,41 +49,11 @@ class StaffService {
         });
     }
 
-    // async update(id, payload){
-    //     const filter = {
-    //         _id: ObjectId.isValid(id) ? new ObjectId(id) : null,
-    //     };
-    //     const update = this.extractStaffData(payload);
-    //     const result  = await this.Staff.findOneAndUpdate(
-    //         filter,
-    //         { $set: update},
-    //         { returnDocument: "after"}
-    //     );
-    //     return result;
-    // }
-
-    // async delete(id) {
-    //     const result = await this.Staff.findOneAndDelete({
-    //         _id: ObjectId.isValid(id) ? new ObjectId(id) : null,
-    //     });
-    //     return result;
-    // }
-
-    // async deleteAll(){
-    //     const result = await this.Staff.deleteMany({});
-    //     return result.deletedCount;
-    // }
-
-    // async findAdmin(){
-    //     return await this.find({ isAdmin: true });
-    // }
-
-    // async findUser(Username, Password){
-    //     return await this.Staff.findOne({
-    //         username: Username,
-    //         password: Password,
-    //     });
-    // }
+    async findByMS(MS){
+        return await this.Staff.findOne({
+            MSNV: {$regex: new RegExp(MS), $options: "i"},
+        });
+    }
 }
 
 module.exports = StaffService;
